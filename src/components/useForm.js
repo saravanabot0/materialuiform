@@ -8,6 +8,7 @@ export default function useForm(initialValues, validateOnChange=false,validate) 
     
     const handleChange = e => {
         const {name, value} = e.target;
+        // console.log(e.target.value);
         setValues({
             ...values,
             [name]:value

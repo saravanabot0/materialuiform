@@ -1,8 +1,13 @@
 import { React} from "react";
 import "./eventRegistration.css";
 import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   Grid,
   makeStyles,
+  Radio,
+  RadioGroup,
 } from "@material-ui/core";
 
 import useForm from "../../components/useForm";
@@ -16,16 +21,16 @@ const conferencesPasses = [
 ];
 
 const states = [
-  { id: 1, title: "TamilNadu" },
-  { id: 2, title: "Kerala" },
-  { id: 3, title: "AndhraPradesh" },
-  { id: 4, title: "Delhi" },
-  { id: 5, title: "Mumbai" },
+  { id: "TamilNadu", title: "TamilNadu" },
+  { id: "Kerala", title: "Kerala" },
+  { id: "AndhraPradesh", title: "AndhraPradesh" },
+  { id: "Delhi", title: "Delhi" },
+  { id: "Mumbai", title: "Mumbai" },
 ];
 
 const mealPreference =[
-    {id:1, title: "Non-Veg"},
-    {id:2, title: "Veg"},
+    {id:"Non-Veg", title: "Non-Veg"},
+    {id:"Veg", title: "Veg"},
 ]
 
 const speakingAtConference = [
@@ -70,6 +75,7 @@ function EventRegistration() {
     temp.mailingAddress = (/$^|.+@.+..+/).test(fieldValues.mailingAddress)?"":"Email is not valid"
     if("city" in fieldValues)
     temp.city = fieldValues.city?"":"This Field is Required"
+    if("zipCode" in fieldValues)
     temp.zipCode = fieldValues.zipCode?"":"This Field is Required"
     if("state" in fieldValues)
     temp.state = fieldValues.state.length !== 0 ? "":"This Field is Required"
@@ -90,9 +96,14 @@ function EventRegistration() {
     e.preventDefault();
     if(validate()){
       window.alert("thank you for Registration...")
+      console.log("User Registered",values)
       setValues(initialValues);
       setErrors({});
     }
+  }
+
+  const showSelectedValue = e => {
+    console.log(e.target.value);
   }
 
   return (
@@ -146,14 +157,14 @@ function EventRegistration() {
 
           <Controls.RadioGroup
             name="speakingAtConference"
-            value={values.speakingAtConference}
+            values={values.speakingAtConference}
             onChange={handleChange}
             label="Are you speaking at the conference"
             items={speakingAtConference}
           />
           <Controls.RadioGroup
             name="conferencePass"
-            value={values.conferencePass}
+            values={values.conferencePass}
             onChange={handleChange}
             label="Conferences Passes"
             items={conferencesPasses}
@@ -166,6 +177,9 @@ function EventRegistration() {
             option={mealPreference}
             error={errors.mealPreference}
           />
+
+
+
           <div>
             <Controls.Button
               type = "submit"
